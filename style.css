@@ -39,7 +39,12 @@ h3 {
 }
 
 .animal-card {
-    background:transparent;
+    /* Define a default variable for the glow color */
+    --glow-color: #ffc600;
+
+    background: transparent;
+    border: 3px solid transparent; /* Invisible border to prevent jumping */
+    border-radius: 10px; /* Added radius to the card itself */
     padding: 5px;
     width: 150px;
     transition: all 0.07s ease;
@@ -52,8 +57,10 @@ h3 {
 /* Visual feedback for playing */
 .playing {
     transform: scale(1.1);
-    border-color: #ffc600;
-    box-shadow: 0 0 20px #ffc600;
+    /* Use the variable injected by JS */
+    border-color: var(--glow-color); 
+    box-shadow: 0 0 25px var(--glow-color);
+    background: rgba(255, 255, 255, 0.1); /* Slight background to emphasize glow */
 }
 
 .animal-card img {
@@ -68,7 +75,8 @@ kbd {
     display: block;
     font-size: 2.5rem;
     font-weight: bold;
-    color: #ff9100;
+    /* The letter also glows in the specific animal color */
+    color: var(--glow-color);
     text-shadow: 2px 2px 7px rgb(0, 0, 0);
 }
 
@@ -83,11 +91,4 @@ kbd {
 @media (max-width: 700px) {
     h1 { font-size: 2.5rem; }
     .animal-card { width: 40%; }
-
-}
-
-@media (max-width: 700px) {
-    h1 { font-size: 2.5rem; }
-    .animal-card { width: 40%; }
-
 }

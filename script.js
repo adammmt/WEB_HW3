@@ -1,5 +1,5 @@
 /**
- * Function to play sound based on key code
+ * Function to play sound and trigger unique visual effects
  */
 function playSound(e) {
     let keyCode;
@@ -21,12 +21,25 @@ function playSound(e) {
     audio.play();
 
     if (card) {
+        /**
+         * -----------------------------------------
+         * #8: Creative element not learned in class
+         * -----------------------------------------
+         * Instead of a static colored glow, I inject a CSS Variable (--glow-color)
+         * based on the 'data-color' attribute in the HTML. 
+         * This allows each animal (even the scary one's) to have its own unique glow color.
+         * Usage of 'style.setProperty' allows JS to communicate directly with CSS logic.
+         */
+        const specificColor = card.getAttribute('data-color');
+        if (specificColor) {
+            card.style.setProperty('--glow-color', specificColor);
+        }
+
         card.classList.add('playing');
     }
 }
 
 /**
- * Requirement #8: Element/Event not studied in class
  * The 'transitionend' event fires when a CSS transition has finished.
  * This is used to remove the 'playing' class exactly when the animation ends.
  */
@@ -47,6 +60,8 @@ cards.forEach(card => {
 // Start background music on first interaction (due to browser policies)
 window.addEventListener('mousedown', () => {
     const bgMusic = document.getElementById('bg-music');
-    bgMusic.volume = 0.1;
-    bgMusic.play();
+    if(bgMusic) {
+        bgMusic.volume = 0.1;
+        bgMusic.play().catch(e => console.log("Audio play blocked"));
+    }
 }, { once: true }); // Runs only once
